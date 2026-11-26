@@ -11,7 +11,7 @@ function Get-GemmaToolConfiguration {
         },
         @{
             name = 'run_powershell'
-            description = 'Execute a PowerShell command in the user''s local Windows session. This is the local execution bridge: use PowerShell for native cmdlets, or launch CMD (cmd.exe /c), Python, native Windows APIs, and installed third-party utilities when they are a better fit. Do not assume a utility is unavailable; inspect only when needed. Set elevated=true only when Administrator privileges are required; Windows UAC will request approval and cannot be bypassed. Permission mode is controlled by .ask (confirmation, default Yes) and .autopilot (no extra GEMMA confirmation); elevated execution still requires Windows UAC consent. Continue using results to complete multi-step tasks.'
+            description = 'Execute a PowerShell command in the user''s local Windows session. This is the local execution bridge: use PowerShell for native cmdlets, or launch CMD (cmd.exe /c), Python, native Windows APIs, and installed third-party utilities when they are a better fit. Do not assume a utility is unavailable; inspect only when needed. Set elevated=true only when Administrator privileges are required; Windows UAC will request approval and cannot be bypassed. Permission mode .ask (confirm ordinary commands, default Yes) and .autopilot (run ordinary commands without GEMMA confirmation) applies to non-elevated commands. Elevated commands use the Windows UAC prompt as their approval step; UAC remains mandatory in autopilot. Continue using results to complete multi-step tasks.'
             parameters = @{
                 type = 'object'
                 properties = @{
