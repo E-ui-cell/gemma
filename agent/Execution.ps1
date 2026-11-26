@@ -311,7 +311,7 @@ exit $exitCode
         }
 
         $process = Start-Process -FilePath $powerShellExe -ArgumentList @(
-            '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+            '-NoLogo', '-NoProfile', '-NonInteractive',
             '-EncodedCommand', $encodedScript
         ) -Verb RunAs -WindowStyle Hidden -WorkingDirectory $workingDirectory -Wait -PassThru -ErrorAction Stop
 
