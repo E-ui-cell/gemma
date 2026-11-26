@@ -11,11 +11,12 @@ function Get-GemmaToolConfiguration {
         },
         @{
             name = 'run_powershell'
-            description = 'Execute a PowerShell command in the user''s local Windows session. This is the local execution bridge: use PowerShell for native cmdlets, or launch CMD (cmd.exe /c), Python, native Windows APIs, and installed third-party utilities when they are a better fit. Do not assume a utility is unavailable; inspect only when needed. Permission mode is controlled by .ask (confirmation, default Yes) and .autopilot (execute without confirmation). Continue using results to complete multi-step tasks.'
+            description = 'Execute a PowerShell command in the user''s local Windows session. This is the local execution bridge: use PowerShell for native cmdlets, or launch CMD (cmd.exe /c), Python, native Windows APIs, and installed third-party utilities when they are a better fit. Do not assume a utility is unavailable; inspect only when needed. Set elevated=true only when Administrator privileges are required; Windows UAC will request approval and cannot be bypassed. Permission mode is controlled by .ask (confirmation, default Yes) and .autopilot (no extra GEMMA confirmation); elevated execution still requires Windows UAC consent. Continue using results to complete multi-step tasks.'
             parameters = @{
                 type = 'object'
                 properties = @{
                     command = @{ type = 'string'; description = 'PowerShell command to execute; it may invoke CMD, Python, or another installed Windows utility.' }
+                    elevated = @{ type = 'boolean'; description = 'Set true only when Administrator privileges are required. Runs in a separate elevated PowerShell process and triggers the Windows UAC prompt. Defaults to false.' }
                 }
                 required = @('command')
             }
@@ -86,7 +87,7 @@ function Invoke-GemmaToolCall {
             }
         }
         'run_powershell' {
-            return Invoke-GemmaPowerShellTool -Command ([string]$Call.args.command)
+            return Invoke-GemmaPowerShellTool -Command ([string]$Call.args.command) -Elevated ([bool]$Call.args.elevated)
         }
         'quick_web' {
             return Invoke-GemmaQuickWeb -Action ([string]$Call.args.action) -Query ([string]$Call.args.query)
